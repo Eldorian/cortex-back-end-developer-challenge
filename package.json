@@ -1,0 +1,29 @@
+{
+  "name": "cortex-back-end-developer-challenge",
+  "version": "1.0.0",
+  "description": "In this test we would like you to create an API that will manage a player character’s Hit Points(HP). Clients will need to be able to do the following:\r - Deal damage of different types (bludgeoning, fire, etc) while considering character resistences and immunities\r - Heal\r - Add temporary hit points",
+  "main": "./dist/server.js",
+  "scripts": {
+    "test": "ts-node ./lib/server.ts",
+    "dev": "tsc && nodemon ./dist/server.js",
+    "prod": "tsc && nodemon ./dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DnDBeyond/cortex-back-end-developer-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DnDBeyond/cortex-back-end-developer-challenge/issues"
+  },
+  "homepage": "https://github.com/DnDBeyond/cortex-back-end-developer-challenge#readme",
+  "dependencies": {
+    "@types/express": "^4.17.9",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.18",
+    "nodemon": "^2.0.6"
+  }
+}

@@ -15,3 +15,7 @@ When a character has resistance to a damage type they receive half damage from t
 When a character has immunity to a damage type they receive no damage from that type.
 
 Feel free to fill in any gaps you may encounter as you see fit. However, if you have questions please reach out to your Fandom contact and we will get back to you.
+
+# Steps I took to create this
+- I timeboxed myself to 8 hours to do this work
+- With very little exposure to Typescript, Node Express, and Mongo - I followed this tutorial on how to build out the scaffolding of a simple API project and used it as my base since it seemed to follow similar patterns I use when building my .NET Web APIs: [https://levelup.gitconnected.com/setup-restful-api-with-node-js-express-mongodb-using-typescript-261959ef0998](Setup RESTful API with Node.js, Express, MongoDB using Typescript)
