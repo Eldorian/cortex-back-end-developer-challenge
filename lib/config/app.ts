@@ -2,6 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
 import environment from "../environment";
+import { CharacterRoutes } from "../routes/character_routes";
 import { UserRoutes } from "../routes/user_routes";
 import { TestRoutes } from "../routes/test_routes";
 import { CommonRoutes } from "../routes/common_routes";
@@ -11,6 +12,7 @@ class App {
    public app: express.Application;
    public mongoUrl: string = 'mongodb://localhost/' + environment.getDBName();
 
+   private character_routes: CharacterRoutes = new CharacterRoutes();
    private user_routes: UserRoutes = new UserRoutes();
    private test_routes: TestRoutes = new TestRoutes();
    private common_routes: CommonRoutes = new CommonRoutes();
@@ -20,6 +22,7 @@ class App {
       this.config();
       this.mongoSetup();
 
+      this.character_routes.route(this.app);
       this.user_routes.route(this.app);
       this.test_routes.route(this.app);
       this.common_routes.route(this.app);

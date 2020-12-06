@@ -38,7 +38,7 @@ export class UserController {
             });
         } else {
             // error response if some fields are missing in request body
-            insufficientParameters(res);
+            insufficientParameters("request missing data", res);
         }
     }
 
@@ -53,7 +53,7 @@ export class UserController {
                 }
             });
         } else {
-            insufficientParameters(res);
+            insufficientParameters("request missing data", res);
         }
     }
 
@@ -98,7 +98,7 @@ export class UserController {
                 }
             });
         } else {
-            insufficientParameters(res);
+            insufficientParameters("request missing data", res);
         }
     }
 
@@ -114,7 +114,7 @@ export class UserController {
                 }
             });
         } else {
-            insufficientParameters(res);
+            insufficientParameters("request missing data", res);
         }
     }
 }

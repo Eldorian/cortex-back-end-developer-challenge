@@ -5,17 +5,21 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     name: String,
-    level: Number,
+    level: {
+        type: Number,
+        default: 1
+    },
     hitpoints: Number,
     max_hitpoints: Number,
     temp_hitpoints: Number,
-    classes: {
-        type: {
-            name: String,
-            hitdiceValue: Number,
-            classLevel: Number
+    classes: [{
+        name: String,
+        hitdiceValue: Number,
+        classLevel: {
+            type: Number,
+            default: 1
         }
-    },
+    }],
     stats: {
         type: {
             strength: Number,
@@ -26,22 +30,18 @@ const schema = new Schema({
             charisma: Number
         }
     },
-    items: {
-        type: {
-            name: String,
-            modifier: {
-                affectedObject: String,
-                affectedValue: String,
-                value: Number
-            }
+    items: [{
+        name: String,
+        modifier: {
+            affectedObject: String,
+            affectedValue: String,
+            value: Number
         }
-    },
-    defenses: {
-        type: {
-            type: String,
-            defense: String
-        }
-    },
+    }],
+    defenses: [{
+        type: String,
+        defense: String
+    }],
     modification_notes: [ModificationNote]
 });
 
