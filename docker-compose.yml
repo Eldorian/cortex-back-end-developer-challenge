@@ -1,15 +1,14 @@
-version: '3.6'
+version: '3.7'
 
 services:
   mongo:
-    image: mongo
-
+    image: mongo:latest
+    ports:
+      - 27017:27017
 
   cortex:
-    image: dndapi:latest
+    build: .
     depends_on:
       - mongo
     ports:
       - 3000:3000
-    env_file:
-      - ./.env

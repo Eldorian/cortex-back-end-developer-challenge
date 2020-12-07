@@ -1,0 +1,9 @@
+{
+    "watchOptions": {
+        "followSymlinks": false
+    },
+    "watch": [
+        "lib"
+    ],
+    "ext": "js"
+}
