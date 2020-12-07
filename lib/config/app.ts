@@ -10,7 +10,7 @@ import { CommonRoutes } from "../routes/common_routes";
 class App {
 
    public app: express.Application;
-   public mongoUrl: string = 'mongodb://mongo:27016/' + environment.getDBName();
+   public mongoUrl: string = 'mongodb://mongo:27017/' + environment.getDBName();
 
    private character_routes: CharacterRoutes = new CharacterRoutes();
    private user_routes: UserRoutes = new UserRoutes();
