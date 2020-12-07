@@ -27,3 +27,12 @@ Feel free to fill in any gaps you may encounter as you see fit. However, if you 
 - Nothing like spending 2 hours on why your math won't work because apparently Number is a different type than number
 - I'm not a fan of having all the business logic sitting in the controllers, but I am out of time to go back and refactor this
 - I would have liked to use the class-validator package to do some validation on the model, but ran out of time to figure out how it works - I think what I have kind of works in a weird way anyway, but would have preferred to explicitly code in the validation so everyone knows what is accepted and what is not.
+- Wanted to add some swagger implementation to these APIs, but instead I will include my postman collection I used to test with
+- Designed this with the idea of having separate end points for adding temp hit points, healing, and damage - that way I could just use the same ICharacter model I created.
+- Unfortunately I don't have any experience running a node.js application in docker and having a heck of a time getting it to run. Can build the image just fine, but when I run it nodemon tells me that the internal watch failed. Have a feeling it's something messed up with how I am using ports but everything I have tried so far has been fruitless. Going to sync this up to github and submit it with an explanation and that I'm going to try and fix it Monday after sleeping on it.
+
+# Running this thing
+- If you want to run locally, install Mongo on your PC (also recommend mongoDBCompass). In the root folder of the project on a command line do 'npm install - y' then also run 'npm install -g typescript'. Finally run 'npm run dev' (or whatever environment based on the envvironment file) and you can hit the end points from there using postman.
+- If you run from docker you should be able to run 'docker build -t imageName .' to build the image (which does work) and then 'docker run -p 3000:3000 imageName' - but as of right now nodemon will throw an internal watch failed error about circular symlink detected I need to figure out
+- Check the postman collection. You should be able to run the post character endpoint and that will create one based off the briv.json. Or you can go into the characterController and change some things around if you want to create something different.
+- From there you can also add temp hit points, heal, and do damage to the character after grabbing the character id from the post character response
