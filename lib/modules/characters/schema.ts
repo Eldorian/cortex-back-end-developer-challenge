@@ -11,7 +11,10 @@ const schema = new Schema({
     },
     hitpoints: Number,
     max_hitpoints: Number,
-    temp_hitpoints: Number,
+    temp_hitpoints: {
+        type: Number,
+        default: 0
+    },
     classes: [{
         name: String,
         hitdiceValue: Number,
@@ -39,7 +42,7 @@ const schema = new Schema({
         }
     }],
     defenses: [{
-        type: String,
+        damageType: String,
         defense: String
     }],
     modification_notes: [ModificationNote]

@@ -3,34 +3,40 @@ import { ModificationNote } from "../common/model";
 export interface ICharacter {
     _id?: String;
     name: String;
-    level: Number;
-    hitpoints?: Number;
-    max_hitpoints?: Number;
-    temp_hitpoints?: Number;
-    classes?: [{
-        name?: String;
-        hitdiceValue?: Number;
-        classLevel?: Number;
-    }];
+    level: number;
+    hitpoints?: number;
+    max_hitpoints?: number;
+    temp_hitpoints?: number;
+    classes?: Array<ICharacterClasses>;
     stats: {
-        strength: Number;
-        dexterity: Number;
-        constitution: Number;
-        intelligence: Number;
-        wisdom: Number;
-        charisma: Number;
+        strength: number;
+        dexterity: number;
+        constitution: number;
+        intelligence: number;
+        wisdom: number;
+        charisma: number;
     };
-    items?: [{
-        name: String;
-        modidier: {
-            affectedObject: String;
-            affectedValue: String;
-            value: Number;
-        };
-    }];
-    defenses?: [{
-        type: String;
-        defense: String;
-    }];
+    items?: Array<ICharacterItems>;
+    defenses?: Array<ICharacterDefenses>;
     modification_notes: ModificationNote[];
+}
+
+export interface ICharacterClasses {
+    name?: String;
+    hitdiceValue?: number;
+    classLevel?: number;
+}
+
+export interface ICharacterItems {
+    name: String;
+    modifier: {
+        affectedObject: String;
+        affectedValue: String;
+        value: number;
+    };
+}
+
+export interface ICharacterDefenses {
+    damageType: String;
+    defense: String;
 }
