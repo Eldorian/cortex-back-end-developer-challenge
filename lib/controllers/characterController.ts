@@ -40,7 +40,6 @@ export class CharacterController {
 
             //calculating the average hitpoints by giving the first level the max hitdice and each additional level the average (can't remember if this works for the 2nd multiclass but that's what I am going with)
             var hitpoints = 0;
-            var totalLevel = 0;
             character_params.classes.forEach(element => {
                 if (element.classLevel > 1) {
                     hitpoints = hitpoints + (element.classLevel * element.hitdiceValue) - (((element.classLevel - 1) * element.hitdiceValue) / 2)
@@ -48,8 +47,6 @@ export class CharacterController {
                 else {
                     hitpoints = hitpoints + element.hitdiceValue;
                 }
-
-                totalLevel = totalLevel + element.classLevel;
             });
 
             //Getting the total constitution score by grabbing it from the stat itself and then checking for any item enhancements
@@ -64,7 +61,7 @@ export class CharacterController {
             }
 
             //Adding the bonus hitpoints for each level with the constitution modfifier
-            var bonusHitPoints = Math.floor((totalConstitutionScore - 10) / 2) * totalLevel;
+            var bonusHitPoints = Math.floor((totalConstitutionScore - 10) / 2) * character_params.level;
 
             character_params.hitpoints = hitpoints + bonusHitPoints;
             character_params.max_hitpoints = hitpoints + bonusHitPoints;

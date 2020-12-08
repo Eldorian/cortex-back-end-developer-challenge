@@ -36,6 +36,6 @@ Feel free to fill in any gaps you may encounter as you see fit. However, if you 
 
 # Running this thing
 - If you want to run locally, install Mongo on your PC (also recommend mongoDBCompass). In the root folder of the project on a command line do 'npm install - y' then also run 'npm install -g typescript'. Finally run 'npm run dev' (or whatever environment based on the envvironment file) and you can hit the end points from there using postman.
-- If you run from docker you should be able to run 'docker build -t imageName .' to build the image and then 'docker-compose up'
+- If you run from docker you should be able to run 'docker-compose up'
 - Check the postman collection. You should be able to run the post character endpoint and that will create one based off the briv.json. Or you can go into the characterController and change some things around if you want to create something different.
 - From there you can also add temp hit points, heal, and do damage to the character after grabbing the character id from the post character response - and then check the progress by doing the get character endpoint
