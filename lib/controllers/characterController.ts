@@ -38,36 +38,6 @@ export class CharacterController {
                 }]
             };
 
-            // character_params.classes.forEach((element: { name: String; hitdiceValue: number; classLevel: number; }) => {
-            //     req.body.classes.push({
-            //         name: element.name,
-            //         hitdiceValue: element.hitdiceValue,
-            //         classLevel: element.classLevel
-            //     });
-            // });
-
-            // if (req.body.items) {
-            //     character_params.items.forEach(element => {
-            //         req.body.items.push({
-            //             name: element.name,
-            //             modifier: {
-            //                 affectedObject: element.modifier.affectedObject,
-            //                 affectedValue: element.modifier.affectedValue,
-            //                 value: element.modifier.value
-            //             }
-            //         })
-            //     });
-            // }
-
-            // if (req.body.defenses) {
-            //     character_params.defenses.forEach((element: { damageType: String; defense: String; }) => {
-            //         req.body.defenses.push({
-            //             damageType: element.damageType,
-            //             defense: element.defense
-            //         });
-            //     });
-            // }
-
             //calculating the average hitpoints by giving the first level the max hitdice and each additional level the average (can't remember if this works for the 2nd multiclass but that's what I am going with)
             var hitpoints = 0;
             var totalLevel = 0;
