@@ -7,91 +7,109 @@ import e = require('express');
 export class CharacterController {
 
     private character_service: CharacterService = new CharacterService();
-    //Decided to just hard code this for now so I can move on to the actual work this project is supposed to do. Otherwise I won't get this done in time.
     public create_character(req: Request, res: Response) {
-        const character_params: ICharacter = {
-            name: "Briv",
-            level: 5,
-            classes: [{
-                name: "fighter",
-                hitdiceValue: 10,
-                classLevel: 3
-            }, {
-                name: "wizard",
-                hitdiceValue: 6,
-                classLevel: 2
-            }],
-            stats: {
-                strength: 15,
-                dexterity: 12,
-                constitution: 14,
-                intelligence: 13,
-                wisdom: 10,
-                charisma: 8
-            },
-            items: [{
-                name: "Ioun Stone of Fortitude",
-                modifier: {
-                    affectedObject: "stats",
-                    affectedValue: "constitution",
-                    value: 2
+        if (req.body.name && req.body.level > 0 && req.body.stats
+            && req.body.stats.strength >= 3 && req.body.stats.strength <= 20
+            && req.body.stats.dexterity >= 3 && req.body.stats.dexterity <= 20
+            && req.body.stats.intelligence >= 3 && req.body.stats.intelligence <= 20
+            && req.body.stats.constitution >= 3 && req.body.stats.constitution <= 20
+            && req.body.stats.wisdom >= 3 && req.body.stats.wisdom <= 20
+            && req.body.stats.charisma >= 3 && req.body.stats.charisma <= 20
+            && req.body.classes && req.body.items && req.body.defenses) {
+
+            const character_params: ICharacter = {
+                name: req.body.name,
+                level: req.body.level,
+                classes: req.body.classes,
+                stats: {
+                    strength: req.body.stats.strength,
+                    dexterity: req.body.stats.dexterity,
+                    constitution: req.body.stats.constitution,
+                    intelligence: req.body.stats.intelligence,
+                    wisdom: req.body.stats.wisdom,
+                    charisma: req.body.stats.charisma
+                },
+                items: req.body.items,
+                defenses: req.body.defenses,
+                modification_notes: [{
+                    modified_on: new Date(Date.now()),
+                    modified_by: null,
+                    modification_note: 'New Character created'
+                }]
+            };
+
+            // character_params.classes.forEach((element: { name: String; hitdiceValue: number; classLevel: number; }) => {
+            //     req.body.classes.push({
+            //         name: element.name,
+            //         hitdiceValue: element.hitdiceValue,
+            //         classLevel: element.classLevel
+            //     });
+            // });
+
+            // if (req.body.items) {
+            //     character_params.items.forEach(element => {
+            //         req.body.items.push({
+            //             name: element.name,
+            //             modifier: {
+            //                 affectedObject: element.modifier.affectedObject,
+            //                 affectedValue: element.modifier.affectedValue,
+            //                 value: element.modifier.value
+            //             }
+            //         })
+            //     });
+            // }
+
+            // if (req.body.defenses) {
+            //     character_params.defenses.forEach((element: { damageType: String; defense: String; }) => {
+            //         req.body.defenses.push({
+            //             damageType: element.damageType,
+            //             defense: element.defense
+            //         });
+            //     });
+            // }
+
+            //calculating the average hitpoints by giving the first level the max hitdice and each additional level the average (can't remember if this works for the 2nd multiclass but that's what I am going with)
+            var hitpoints = 0;
+            var totalLevel = 0;
+            character_params.classes.forEach(element => {
+                if (element.classLevel > 1) {
+                    hitpoints = hitpoints + (element.classLevel * element.hitdiceValue) - (((element.classLevel - 1) * element.hitdiceValue) / 2)
                 }
-            }],
-            defenses: [{
-                damageType: "fire",
-                defense: "immunity"
-            }, {
-                damageType: "slashing",
-                defense: "resistance"
-            }],
-            modification_notes: [{
-                modified_on: new Date(Date.now()),
-                modified_by: null,
-                modification_note: 'New Character created'
-            }]
-        };
+                else {
+                    hitpoints = hitpoints + element.hitdiceValue;
+                }
 
-        //calculating the average hitpoints by giving the first level the max hitdice and each additional level the average (can't remember if this works for the 2nd multiclass but that's what I am going with)
-        //also getting the total level so we can calculate any bonuses for constitution and enchantments later
-        var hitpoints = 0;
-        var totalLevel = 0;
-        character_params.classes.forEach(element => {
-            if (element.classLevel > 1) {
-                hitpoints = hitpoints + (element.classLevel * element.hitdiceValue) - (((element.classLevel - 1) * element.hitdiceValue) / 2)
-            }
-            else {
-                hitpoints = hitpoints + element.hitdiceValue;
+                totalLevel = totalLevel + element.classLevel;
+            });
+
+            //Getting the total constitution score by grabbing it from the stat itself and then checking for any item enhancements
+            //I do think that this won't stack though according to the D&D rules, but I'm not going to take that into account here for simplicity
+            var totalConstitutionScore = character_params.stats.constitution;
+            if (character_params.items) {
+                character_params.items.forEach(element => {
+                    if (element.modifier.affectedValue === "constitution") {
+                        totalConstitutionScore = totalConstitutionScore + element.modifier.value;
+                    }
+                });
             }
 
-            totalLevel = totalLevel + element.classLevel;
-        });
+            //Adding the bonus hitpoints for each level with the constitution modfifier
+            var bonusHitPoints = Math.floor((totalConstitutionScore - 10) / 2) * totalLevel;
 
-        //Getting the total constitution score by grabbing it from the stat itself and then checking for any item enhancements
-        //I do think that this won't stack though according to the D&D rules, but I'm not going to take that into account here for simplicity
-        var totalConstitutionScore = character_params.stats.constitution;
-        if (character_params.items) {
-            character_params.items.forEach(element => {
-                if (element.modifier.affectedValue === "constitution") {
-                    totalConstitutionScore = totalConstitutionScore + element.modifier.value;
+            character_params.hitpoints = hitpoints + bonusHitPoints;
+            character_params.max_hitpoints = hitpoints + bonusHitPoints;
+
+            this.character_service.createCharacter(character_params, (err: any, character_data: ICharacter) => {
+                if (err) {
+                    mongoError(err, res);
+                } else {
+                    successResponse('created character successfully', character_data, res);
                 }
             });
         }
-
-        //Adding the bonus hitpoints for each level with the constitution modfifier
-        var bonusHitPoints = Math.floor((totalConstitutionScore - 10) / 2) * totalLevel;
-
-        character_params.hitpoints = hitpoints + bonusHitPoints;
-        character_params.max_hitpoints = hitpoints + bonusHitPoints;
-
-        this.character_service.createCharacter(character_params, (err: any, character_data: ICharacter) => {
-            if (err) {
-                mongoError(err, res);
-            } else {
-                successResponse('created character successfully', character_data, res);
-            }
-        });
-
-
+        else {
+            insufficientParameters("Missing or Invalid parameters", res);
+        }
     }
 
     public get_character(req: Request, res: Response) {
@@ -327,7 +345,7 @@ export class CharacterController {
 
     public delete_character(req: Request, res: Response) {
         if (req.params.id) {
-            this.character_service.deleteCharacter(req.params.id, (err: any, delete_details) => {
+            this.character_service.deleteCharacter(req.params.id, (err: any, delete_details: { deletedCount: number; }) => {
                 if (err) {
                     mongoError(err, res);
                 } else if (delete_details.deletedCount !== 0) {

@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/character/5fcd81936d124091cc899118",
+					"raw": "http://localhost:3000/api/character/5fcf39d80900f2002449deb9",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -20,7 +20,7 @@
 					"path": [
 						"api",
 						"character",
-						"5fcd81936d124091cc899118"
+						"5fcf39d80900f2002449deb9"
 					]
 				}
 			},
@@ -33,7 +33,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\r\n  \"name\": \"Briv\",\r\n  \"level\": 5,\r\n  \"classes\": [\r\n    {\r\n    \"name\":\"fighter\",\r\n    \"hitdiceValue\":10,\r\n    \"classLevel\":3\r\n    },\r\n    {\r\n      \"name\":\"wizard\",\r\n      \"hitdiceValue\":6,\r\n      \"classLevel\":2\r\n    }\r\n  ],\r\n  \"stats\":{\r\n    \"strength\":15,\r\n    \"dexterity\":12,\r\n    \"constitution\":14,\r\n    \"intelligence\":13,\r\n    \"wisdom\":10,\r\n    \"charisma\":8\r\n  },\r\n  \"items\":[\r\n    {\r\n      \"name\":\"Ioun Stone of Fortitude\",\r\n      \"modifier\":{\r\n        \"affectedObject\":\"stats\",\r\n        \"affectedValue\":\"constitution\",\r\n        \"value\":2\r\n      }\r\n    }\r\n  ],\r\n  \"defenses\":[\r\n    {\r\n      \"damageType\":\"fire\",\r\n      \"defense\":\"immunity\"\r\n    },\r\n    {\r\n      \"damageType\":\"slashing\",\r\n      \"defense\":\"resistance\"\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +70,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/character/5fcd81936d124091cc899118/addtemphp",
+					"raw": "http://localhost:3000/api/character/5fcf39d80900f2002449deb9/addtemphp",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -79,7 +79,7 @@
 					"path": [
 						"api",
 						"character",
-						"5fcd81936d124091cc899118",
+						"5fcf39d80900f2002449deb9",
 						"addtemphp"
 					]
 				}
@@ -93,7 +93,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"heal\" : 50\r\n}",
+					"raw": "{\r\n    \"heal\" : 4\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +101,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/character/5fcd81936d124091cc899118/heal",
+					"raw": "http://localhost:3000/api/character/5fcf39d80900f2002449deb9/heal",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -110,7 +110,7 @@
 					"path": [
 						"api",
 						"character",
-						"5fcd81936d124091cc899118",
+						"5fcf39d80900f2002449deb9",
 						"heal"
 					]
 				}
@@ -124,7 +124,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"damage\" : 30,\r\n    \"damageType\" : \"poking\"\r\n}",
+					"raw": "{\r\n    \"damage\" : 30,\r\n    \"damageType\" : \"slashing\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -132,7 +132,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/character/5fcd81936d124091cc899118/damage",
+					"raw": "http://localhost:3000/api/character/5fcf39d80900f2002449deb9/damage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -141,7 +141,7 @@
 					"path": [
 						"api",
 						"character",
-						"5fcd81936d124091cc899118",
+						"5fcf39d80900f2002449deb9",
 						"damage"
 					]
 				}
