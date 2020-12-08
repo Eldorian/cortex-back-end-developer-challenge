@@ -31,6 +31,7 @@ Feel free to fill in any gaps you may encounter as you see fit. However, if you 
 - Designed this with the idea of having separate end points for adding temp hit points, healing, and damage - that way I could just use the same ICharacter model I created.
 - Unfortunately I don't have any experience running a node.js application in docker and having a heck of a time getting it to run. Can build the image just fine, but when I run it nodemon tells me that the internal watch failed. Have a feeling it's something messed up with how I am using ports but everything I have tried so far has been fruitless. Going to sync this up to github and submit it with an explanation and that I'm going to try and fix it Monday after sleeping on it.
 - nevermind, apparently it's gonna bug me and I'll stay up until 2:20 AM to fix it!
+- I messed up and misread a requirement earlier and discovered it today. I did not calculate the starting hitpoints for a character. I have gone ahead and added that into the code tonight when creating a new character.
 
 # Running this thing
 - If you want to run locally, install Mongo on your PC (also recommend mongoDBCompass). In the root folder of the project on a command line do 'npm install - y' then also run 'npm install -g typescript'. Finally run 'npm run dev' (or whatever environment based on the envvironment file) and you can hit the end points from there using postman.

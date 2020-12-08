@@ -7,14 +7,11 @@ import e = require('express');
 export class CharacterController {
 
     private character_service: CharacterService = new CharacterService();
-
     //Decided to just hard code this for now so I can move on to the actual work this project is supposed to do. Otherwise I won't get this done in time.
     public create_character(req: Request, res: Response) {
         const character_params: ICharacter = {
             name: "Briv",
             level: 5,
-            max_hitpoints: 32,
-            hitpoints: 10,
             classes: [{
                 name: "fighter",
                 hitdiceValue: 10,
@@ -53,6 +50,38 @@ export class CharacterController {
                 modification_note: 'New Character created'
             }]
         };
+
+        //calculating the average hitpoints by giving the first level the max hitdice and each additional level the average (can't remember if this works for the 2nd multiclass but that's what I am going with)
+        //also getting the total level so we can calculate any bonuses for constitution and enchantments later
+        var hitpoints = 0;
+        var totalLevel = 0;
+        character_params.classes.forEach(element => {
+            if (element.classLevel > 1) {
+                hitpoints = hitpoints + (element.classLevel * element.hitdiceValue) - (((element.classLevel - 1) * element.hitdiceValue) / 2)
+            }
+            else {
+                hitpoints = hitpoints + element.hitdiceValue;
+            }
+
+            totalLevel = totalLevel + element.classLevel;
+        });
+
+        //Getting the total constitution score by grabbing it from the stat itself and then checking for any item enhancements
+        //I do think that this won't stack though according to the D&D rules, but I'm not going to take that into account here for simplicity
+        var totalConstitutionScore = character_params.stats.constitution;
+        if (character_params.items) {
+            character_params.items.forEach(element => {
+                if (element.modifier.affectedValue === "constitution") {
+                    totalConstitutionScore = totalConstitutionScore + element.modifier.value;
+                }
+            });
+        }
+
+        //Adding the bonus hitpoints for each level with the constitution modfifier
+        var bonusHitPoints = Math.floor((totalConstitutionScore - 10) / 2) * totalLevel;
+
+        character_params.hitpoints = hitpoints + bonusHitPoints;
+        character_params.max_hitpoints = hitpoints + bonusHitPoints;
 
         this.character_service.createCharacter(character_params, (err: any, character_data: ICharacter) => {
             if (err) {
